@@ -29,6 +29,7 @@ public class Hinstructor implements Serializable {
 
 	//bi-directional one-to-one association to Hperson
 	@OneToOne(mappedBy="hinstructor")
+	@JoinColumn(name="PERSONID")
 	private Hperson hperson;
 
 	public Hinstructor() {

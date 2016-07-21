@@ -29,8 +29,10 @@ public class CourseDB {
 	}
 	
 	public static List<Hclass> getAllClasses(){
-		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		String qString = "Select c from Hclass c";
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();		
+		
+		String qString = "Select c from Hclass c";	
+		
 		TypedQuery<Hclass> q = em.createQuery(qString, Hclass.class);		
 		
 		List<Hclass> r = null;

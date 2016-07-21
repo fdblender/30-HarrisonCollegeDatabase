@@ -15,25 +15,26 @@
 			<c:out value="Class Listing" />
 		</h2>
 	</div>
-	<div>
+	<div>	
 		<table class="table table-bordered table-striped table-hover">
 			<thead>
 				<tr>					
+					<th>CRN</th>
 					<th>Course Num</th>
 					<th>Course Name</th>					
-						<th>Subject</th>
-					<th>Department</th>
-					<th>Credits</th>					
+					<th>Credits</th>
+					<th>Description</th>
+					<th>Instructor</th>					
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="course" items="${courses}">
+				<c:forEach var="class" items="${classes}">
 					<tr>
-						<td><c:out value="${course.coursenumber}" /></td>
-						<td><c:out value="${course.coursename}" /></td>
-						<td><c:out value="${course.subject}" /></td>						
-						<td><c:out value="${course.department}" /></td>	
-						<td><c:out value="${course.credits}" /></td>											
+						<td><c:out value="${class.crn}" /></td>
+						<td><c:out value="${class.hcours.coursename}" /></td>
+						<td><c:out value="${class.hcours.credits}" /></td>						
+						<td><c:out value="${class.description}" /></td>	
+						<!-- <td><c:out value="${class.hinstructor.firstname"} ${class.hinstructor.lastname"}/></td>	-->										
 					</tr>
 				</c:forEach>
 			</tbody>

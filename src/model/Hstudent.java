@@ -29,6 +29,7 @@ public class Hstudent implements Serializable {
 
 	//bi-directional one-to-one association to Hperson
 	@OneToOne(mappedBy="hstudent")
+	@JoinColumn(name="PERSONID")
 	private Hperson hperson;
 
 	public Hstudent() {

@@ -1,0 +1,97 @@
+DropClass Servlet
+
+HttpSession session = request.getSession(); 
+session.getAttributes("user", user);
+classid = request.getParameters("classid");
+HCoursesDB.dropClass(classid, user.studentid);
+StringURL = "/studentportal.jsp";
+
+--------------------------------------------------
+EmailInstructor Servlet
+
+HttpSession session = request.getSession(); 
+session.getAttributes("user", user);
+String instructorid = request.getParameters("instructorid");
+String subject = request.getParameters("subject");
+String body = request.getParameters("body");
+HUser instructor = HUserDB.getUser(instructorid);
+if (instructor != null) {
+	message = MessageUtil.sendMessage(instructor.email, user.email, subject, body);
+	StringURL = "/studentportal.jsp";
+} else {
+	StringURL = "/emailerror"
+}
+
+--------------------------------------------------
+Login Servlet
+
+HttpSession session = request.getSession();  
+session.getAttributes("user", user);
+String useremail = request.getParameter("email");
+String userpassword = request.getParameter("password");
+String action = request.getParameter("action");        
+String nextURL = "/loginerror.jsp"; 
+Huser user = null; 
+if (action.equals("createaccount")) {
+        //create an account for a new user
+        System.out.println("Login: creating an account for a new user");
+        String username = request.getParameter("username");  
+        user = DBUser.addNewUser(username, useremail, userpassword); 
+} else {        
+        //validate the user for login
+        System.out.println("Login: validating a user");
+        user = DBUser.getValidUser(useremail, userpassword);
+}        	
+if (user != null){ 
+	System.out.println("found valid user"+useremail+" "+userpassword);
+        session.setAttribute("user", user); 
+        session.setAttribute("username", String.valueOf(user.getUsername()));
+	nextURL = "/Portal";
+}
+response.sendRedirect(request.getContextPath() + nextURL);
+}
+
+--------------------------------------------------
+Portal Servlet
+
+String loginrole = "/loginerror";
+HttpSession session = request.getSession();
+session.getAttributes("user", user); 
+session.getAttributes("loginrole", loginrole);  // in jsp, store loginrole in session
+List<Hclass> classes = null;
+
+if (loginrole.equals("instructor") {
+	if (user.isInstructor) {
+		classes = HcoursesDB.getClassesForInstructor(user.instructorid);
+		session.setAttribute("classes", classes);
+		StringURL = "/instructorportal.jsp";
+	}
+} else {
+	classes = HcoursesDB.getClassesForStudent(user.studentid);
+	session.setAttribute("classes", classes);
+	StringURL = "/studentportal.jsp";
+}
+response.sendRedirect(request.getContextPath() + nextURL);
+--------------------------------------------------
+GetRoster Servlet
+
+HttpSession session = request.getSession();
+session.getAttributes("user", user); 
+List<Henrollment> enrollments = null; 
+String loginrole = "/loginerror";
+
+classid = request.getParameters("classid");
+enrollments = HCoursesDB.getRoster(classid, user.instructorid);
+session.setAttribute("enrollments", enrollments);
+StringURL = "/viewroster.jsp";
+--------------------------------------------------
+EditGrade Servlet
+
+HttpSession session = request.getSession();
+session.getAttributes("user", user); 
+String grade = request.getParameter("grade");
+String enrollmentid = request.getParameter("enrollmentid");
+
+HCoursesDB.setGrade(new BigDecimal(enrollmentid), grade);
+StringURL = "/viewroster.jsp";
+--------------------------------------------------

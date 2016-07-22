@@ -8,22 +8,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import customTools.CourseDB;
+import model.Huser;
 import model.Hclass;
-import model.Hcours;
+import model.Henrollment;
 
 /**
- * Servlet implementation class ViewClasses
+ * Servlet implementation class ViewRoster
  */
-@WebServlet("/ViewClasses")
-public class ViewClasses extends HttpServlet {
+@WebServlet("/ViewRoster")
+public class ViewRoster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewClasses() {
+    public ViewRoster() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +35,26 @@ public class ViewClasses extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Hclass> classes = CourseDB.getAllClasses();
+		String nextURL = "";
+		//Huser user = null;
+		HttpSession session = request.getSession();
+		//user = (Huser) session.getAttribute("user"); 		
 		
-		if (classes == null) {
-			System.out.println("class list is null");
-		} else {
-			System.out.println("retrieved class list");
-		}
+		Hclass section = null;
 		
-		request.setAttribute("classes", classes);
+		List<Henrollment> enrollment = null; 		
 
-		request.getRequestDispatcher("/viewclasses.jsp").forward(request,response);
+		long classid = Long.parseLong(request.getParameter("classid"));		
+		
+		section = CourseDB.getClass(classid);
+		
+		if (section != null) {
+			enrollment = CourseDB.getStudentsEnrolledInClass(classid);
+		}
+		session.setAttribute("section", section);
+		session.setAttribute("enrollment", enrollment);
+		nextURL = "/viewroster.jsp";
+		response.sendRedirect(request.getContextPath() + nextURL);
 	}
 
 	/**

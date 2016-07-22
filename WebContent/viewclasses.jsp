@@ -9,7 +9,8 @@
 <title>View Courses</title>
 <jsp:include page="bootstrap.jsp"></jsp:include>
 </head>
-<body>	
+<body>
+	<jsp:include page="navbar.jsp"></jsp:include>	
 	<div>
 		<h2>
 			<c:out value="Class Listing" />
@@ -24,17 +25,20 @@
 					<th>Course Name</th>					
 					<th>Credits</th>
 					<th>Description</th>
-					<th>Instructor</th>					
+					<th>Instructor</th>
+					<th>Name</th>					
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="class" items="${classes}">
+				<c:forEach var="c" items="${classes}">
 					<tr>
-						<td><c:out value="${class.crn}" /></td>
-						<td><c:out value="${class.hcours.coursename}" /></td>
-						<td><c:out value="${class.hcours.credits}" /></td>						
-						<td><c:out value="${class.description}" /></td>	
-						<!-- <td><c:out value="${class.hinstructor.firstname"} ${class.hinstructor.lastname"}/></td>	-->										
+						<td><c:out value="${c.crn}" /></td>
+						<td><c:out value="${c.hcours.coursenumber}" /></td>
+						<td><c:out value="${c.hcours.coursename}" /></td>
+						<td><c:out value="${c.hcours.credits}" /></td>						
+						<td><c:out value="${c.description}" /></td>	
+						<td><c:out value="${c.huser.firstname}" /></td>
+						<td><c:out value="${c.huser.lastname}" /></td>											
 					</tr>
 				</c:forEach>
 			</tbody>

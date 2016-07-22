@@ -33,14 +33,14 @@ public class Hclass implements Serializable {
 	@JoinColumn(name="COURSEID")
 	private Hcours hcours;
 
-	//bi-directional many-to-one association to Hinstructor
-	@ManyToOne
-	@JoinColumn(name="INSTRUCTORID")
-	private Hinstructor hinstructor;
-
 	//bi-directional many-to-one association to Henrollment
 	@OneToMany(mappedBy="hclass")
 	private List<Henrollment> henrollments;
+
+	//bi-directional many-to-one association to Huser
+	@ManyToOne
+	@JoinColumn(name="USERID")
+	private Huser huser;
 
 	public Hclass() {
 	}
@@ -85,14 +85,6 @@ public class Hclass implements Serializable {
 		this.hcours = hcours;
 	}
 
-	public Hinstructor getHinstructor() {
-		return this.hinstructor;
-	}
-
-	public void setHinstructor(Hinstructor hinstructor) {
-		this.hinstructor = hinstructor;
-	}
-
 	public List<Henrollment> getHenrollments() {
 		return this.henrollments;
 	}
@@ -113,6 +105,14 @@ public class Hclass implements Serializable {
 		henrollment.setHclass(null);
 
 		return henrollment;
+	}
+
+	public Huser getHuser() {
+		return this.huser;
+	}
+
+	public void setHuser(Huser huser) {
+		this.huser = huser;
 	}
 
 }

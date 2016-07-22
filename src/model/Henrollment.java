@@ -19,15 +19,15 @@ public class Henrollment implements Serializable {
 
 	private String grade;
 
+	//bi-directional many-to-one association to Huser
+	@ManyToOne
+	@JoinColumn(name="USERID")
+	private Huser huser;
+
 	//bi-directional many-to-one association to Hclass
 	@ManyToOne
 	@JoinColumn(name="CLASSID")
 	private Hclass hclass;
-
-	//bi-directional many-to-one association to Hstudent
-	@ManyToOne
-	@JoinColumn(name="STUDENTID")
-	private Hstudent hstudent;
 
 	public Henrollment() {
 	}
@@ -48,20 +48,20 @@ public class Henrollment implements Serializable {
 		this.grade = grade;
 	}
 
+	public Huser getHuser() {
+		return this.huser;
+	}
+
+	public void setHuser(Huser huser) {
+		this.huser = huser;
+	}
+
 	public Hclass getHclass() {
 		return this.hclass;
 	}
 
 	public void setHclass(Hclass hclass) {
 		this.hclass = hclass;
-	}
-
-	public Hstudent getHstudent() {
-		return this.hstudent;
-	}
-
-	public void setHstudent(Hstudent hstudent) {
-		this.hstudent = hstudent;
 	}
 
 }

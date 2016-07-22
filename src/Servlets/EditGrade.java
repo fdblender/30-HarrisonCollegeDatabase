@@ -1,8 +1,6 @@
 package Servlets;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import customTools.CourseDB;
-import model.Hclass;
-import model.Hcours;
+import model.Henrollment;
 
 /**
- * Servlet implementation class ViewClasses
+ * Servlet implementation class EditGrade
  */
-@WebServlet("/ViewClasses")
-public class ViewClasses extends HttpServlet {
+@WebServlet("/EditGrade")
+public class EditGrade extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewClasses() {
+    public EditGrade() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +30,16 @@ public class ViewClasses extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Hclass> classes = CourseDB.getAllClasses();
+		String nextURL = "/error.jsp";
+		String grade = request.getParameter("grade");
 		
-		if (classes == null) {
-			System.out.println("class list is null");
-		} else {
-			System.out.println("retrieved class list");
-		}
-		
-		request.setAttribute("classes", classes);
+		long enrollmentid = Long.parseLong(request.getParameter("enrollmentid"));
 
-		request.getRequestDispatcher("/viewclasses.jsp").forward(request,response);
+		if (CourseDB.SetGrade(enrollmentid, grade)) {		
+			//nextURL = "/viewroster.jsp";
+			nextURL = "/ViewRoster";
+		}
+		request.getRequestDispatcher(nextURL).forward(request,response);
 	}
 
 	/**

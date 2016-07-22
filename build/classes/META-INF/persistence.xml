@@ -7,8 +7,8 @@
 		<class>model.Hcours</class>
 		<class>model.Henrollment</class>
 		<class>model.Hinstructor</class>
-		<class>model.Hperson</class>
 		<class>model.Hstudent</class>
+		<class>model.Huser</class>
 		<properties>
 			<property name="eclipselink.exclude-eclipselink-orm" value="false"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>

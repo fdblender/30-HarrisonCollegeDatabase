@@ -7,6 +7,4 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet" type="text/css">
 <!-- END Bootstrap -->
-<c:if test="${user==null}">
 <link href="https://bootswatch.com/sandstone/bootstrap.min.css" rel="stylesheet" type="text/css">
-</c:if>

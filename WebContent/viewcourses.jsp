@@ -10,6 +10,7 @@
 <jsp:include page="bootstrap.jsp"></jsp:include>
 </head>
 <body>	
+	<jsp:include page="navbar.jsp"></jsp:include>
 	<div>
 		<h2>
 			<c:out value="Course Listing" />

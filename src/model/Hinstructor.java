@@ -2,8 +2,6 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.List;
 
 
 /**
@@ -23,14 +21,9 @@ public class Hinstructor implements Serializable {
 
 	private String officenumber;
 
-	//bi-directional many-to-one association to Hclass
-	@OneToMany(mappedBy="hinstructor")
-	private List<Hclass> hclasses;
-
-	//bi-directional one-to-one association to Hperson
+	//bi-directional one-to-one association to Huser
 	@OneToOne(mappedBy="hinstructor")
-	@JoinColumn(name="PERSONID")
-	private Hperson hperson;
+	private Huser huser;
 
 	public Hinstructor() {
 	}
@@ -59,34 +52,12 @@ public class Hinstructor implements Serializable {
 		this.officenumber = officenumber;
 	}
 
-	public List<Hclass> getHclasses() {
-		return this.hclasses;
+	public Huser getHuser() {
+		return this.huser;
 	}
 
-	public void setHclasses(List<Hclass> hclasses) {
-		this.hclasses = hclasses;
-	}
-
-	public Hclass addHclass(Hclass hclass) {
-		getHclasses().add(hclass);
-		hclass.setHinstructor(this);
-
-		return hclass;
-	}
-
-	public Hclass removeHclass(Hclass hclass) {
-		getHclasses().remove(hclass);
-		hclass.setHinstructor(null);
-
-		return hclass;
-	}
-
-	public Hperson getHperson() {
-		return this.hperson;
-	}
-
-	public void setHperson(Hperson hperson) {
-		this.hperson = hperson;
+	public void setHuser(Huser huser) {
+		this.huser = huser;
 	}
 
 }

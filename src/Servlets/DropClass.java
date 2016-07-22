@@ -1,8 +1,6 @@
 package Servlets;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import customTools.CourseDB;
-import model.Hclass;
-import model.Hcours;
+import customTools.DBFunctions;
+import model.Henrollment;
 
 /**
- * Servlet implementation class ViewClasses
+ * Servlet implementation class DropClass
  */
-@WebServlet("/ViewClasses")
-public class ViewClasses extends HttpServlet {
+@WebServlet("/DropClass")
+public class DropClass extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewClasses() {
+    public DropClass() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +31,17 @@ public class ViewClasses extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Hclass> classes = CourseDB.getAllClasses();
+		String nextURL = "/error.jsp";		
 		
-		if (classes == null) {
-			System.out.println("class list is null");
-		} else {
-			System.out.println("retrieved class list");
-		}
-		
-		request.setAttribute("classes", classes);
+		long enrollmentid = Long.parseLong(request.getParameter("enrollmentid"));
+		Henrollment enrollment = CourseDB.getEnrollment(enrollmentid);
 
-		request.getRequestDispatcher("/viewclasses.jsp").forward(request,response);
+		if (enrollment != null) {		
+			DBFunctions.remove(enrollment);;
+			nextURL = "/ViewRoster";
+		}
+		request.getRequestDispatcher(nextURL).forward(request,response);
+		
 	}
 
 	/**
